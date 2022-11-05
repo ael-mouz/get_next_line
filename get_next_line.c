@@ -6,7 +6,7 @@
 /*   By: ael-mouz <ael-mouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 09:31:00 by ael-mouz          #+#    #+#             */
-/*   Updated: 2022/11/05 16:52:55 by ael-mouz         ###   ########.fr       */
+/*   Updated: 2022/11/05 22:03:50 by ael-mouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*get_next_line(int fd)
 	size_t		i;
 	size_t		l;
 
-	if (fd == -1 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	s = NULL;
 	p = readline(fd, p);
@@ -62,6 +62,28 @@ char	*get_next_line(int fd)
 	return (s);
 }
 
+int	main(void)
+{
+	char	*p;
+	char	*p1;
+	int		fd;
+	int		fd1;
+
+	fd = open("file.txt", O_RDWR, 0777);
+	fd1 = open("file1.txt", O_RDWR, 0777);
+	p = get_next_line(fd);
+	p1 = get_next_line(fd1);
+	printf("|%s|\n", p);
+	printf("|%s|\n", p1);
+	p = get_next_line(fd);
+	p1 = get_next_line(fd1);
+	printf("|%s|\n", p);
+	printf("|%s|\n", p1);
+	printf("\n");
+	free(p);
+	free(p1);
+	// system("leaks a.out");
+}
 // int	main(void)
 // {
 // 	char	*p;
@@ -77,7 +99,6 @@ char	*get_next_line(int fd)
 // 		free(p);
 // 		p = get_next_line(fd);
 // 	}
-// 	printf("%d-->|%s|", i++, p);
 // 	printf("\n");
 // 	free(p);
 // 	system("leaks a.out");
