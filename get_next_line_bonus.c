@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ael-mouz <ael-mouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 09:31:00 by ael-mouz          #+#    #+#             */
-/*   Updated: 2022/11/05 16:52:55 by ael-mouz         ###   ########.fr       */
+/*   Created: 2022/11/05 16:12:44 by ael-mouz          #+#    #+#             */
+/*   Updated: 2022/11/05 19:23:43 by ael-mouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static	char	*readline(int fd, char *p)
 {
@@ -40,7 +40,7 @@ static	char	*readline(int fd, char *p)
 
 char	*get_next_line(int fd)
 {
-	static char	*p;
+	static char	*p[10240];
 	char		*tmp;
 	char		*s;
 	size_t		i;
@@ -49,36 +49,15 @@ char	*get_next_line(int fd)
 	if (fd == -1 || BUFFER_SIZE <= 0)
 		return (NULL);
 	s = NULL;
-	p = readline(fd, p);
-	tmp = p;
-	if (p != NULL)
+	p[fd] = readline(fd, p[fd]);
+	tmp = p[fd];
+	if (p[fd] != NULL)
 	{
-		l = ft_strlen(p, '\n');
-		i = ft_strlen(p, '\0');
-		s = ft_substr(p, 0, l + 1);
-		p = ft_substr(p, l + 1, i - l);
+		l = ft_strlen(p[fd], '\n');
+		i = ft_strlen(p[fd], '\0');
+		s = ft_substr(p[fd], 0, l + 1);
+		p[fd] = ft_substr(p[fd], l + 1, i - l);
 	}
 	free(tmp);
 	return (s);
 }
-
-// int	main(void)
-// {
-// 	char	*p;
-// 	int		fd;
-// 	int		i;
-
-// 	i = 1;
-// 	fd = open("file.txt", O_RDWR, 0777);
-// 	p = get_next_line(fd);
-// 	while (p)
-// 	{
-// 		printf("%d-->|%s|", i++, p);
-// 		free(p);
-// 		p = get_next_line(fd);
-// 	}
-// 	printf("%d-->|%s|", i++, p);
-// 	printf("\n");
-// 	free(p);
-// 	system("leaks a.out");
-// }
