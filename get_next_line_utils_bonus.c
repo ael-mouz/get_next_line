@@ -6,7 +6,7 @@
 /*   By: ael-mouz <ael-mouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 16:50:11 by ael-mouz          #+#    #+#             */
-/*   Updated: 2022/11/05 16:51:48 by ael-mouz         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:30:45 by ael-mouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 
 	i = 0;
 	if (!s)
-		return (0);
+		return (NULL);
 	if (start > ft_strlen(s, '\0'))
 		return (ft_strdup(""));
 	if (len > ft_strlen(&s[start], '\0'))
@@ -96,17 +96,17 @@ char	*ft_substr(char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-char	*ft_strchr(char *s, int c)
+char	*ft_strchr(char *s, char c)
 {
 	if (!s)
 		return (NULL);
 	while (*s != '\0')
 	{
-		if (*s == (char )c)
-			return ((char *)s);
+		if (*s == c)
+			return (s);
 		s++;
 	}
-	if (*s == (char)c)
-		return ((char *)s);
-	return (0);
+	if (*s == c)
+		return (s);
+	return (NULL);
 }
